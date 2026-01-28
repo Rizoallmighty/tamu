@@ -1,0 +1,11 @@
+recipes:
+  - id: nakkis_med_ris
+    name: Nakkis med ris
+    image: nakkis_med_ris.jpg
+    cuisine: vietnamese
+    ingredients:
+      - tomat
+      - gul_løk
+      - ris
+      - nakkekotelett
+    prep_time: 30
