@@ -9,3 +9,103 @@ recipes:
       - ris
       - nakkekotelett
     prep_time: 30
+
+  - id: canh_chua
+    name: Canh chua
+    image: canh_chua.jpg
+    cuisine: vietnamese
+    ingredients:
+      - tomat
+      - gul_løk
+      - ris
+      - kyllingvinger
+    prep_time: 60
+
+  - id: pasta_bolognese
+    name: Pasta Bolognese
+    image: pasta_bolognese.jpg
+    cuisine: italian
+    ingredients:
+      - gulrot
+      - gul_løk
+      - stang_selleri
+      - tomat_purre
+      - mozarella
+      - kjøttdeig
+      - pasta
+    prep_time: 120
+
+  - id: taco
+    name: Taco
+    image: taco.jpg
+    cuisine: mexican
+    ingredients:
+      - agurk
+      - rød_løk
+      - avokado
+      - lime
+      - chili
+      - tomat
+      - kjøttdeig
+      - taco_krydder
+      - rømme
+      - tortilla_chips
+      - tortilla_lefser
+    prep_time: 40
+
+  - id: lasagne
+    name: Lasagne
+    image: lasagne.jpg
+    cuisine: italian
+    ingredients:
+      - gul_løk
+      - hvitløk
+      - ost
+      - melk
+      - toro_lasagne_kit
+      - kjøttdeig
+    prep_time: 90
+
+  - id: canh_bau
+    name: Canh Bau
+    image: canh_bau.jpg
+    cuisine: vietnamese
+    ingredients:
+      - squash
+      - gul_løk
+      - nakkekotelett
+      - ris
+    prep_time: 50
+
+  - id: sommerruller_med_laks
+    name: Sommerruller med laks
+    image: sommerruller_med_laks.jpg
+    cuisine: vietnamese
+    ingredients:
+      - agurk
+      - salat
+      - chili
+      - sitron
+      - rød_løk
+      - lime
+      - laks
+      - ris_nudler
+      - ris_papir
+    prep_time: 30 min
+
+  - id: kylling_bao_buns
+    name: Spicy kylling bao buns
+    image: kylling_bao_buns.jpg
+    cuisine: fusion
+    url: https://www.altasiatisk.no/2020/06/hjemmelaget-bao-buns-med-soya-kylling/
+    ingredients: 
+      - kylling
+      - soya_saus
+      - honning
+      - østerssaus
+      - stjerneanis
+      - chili
+      - koriander
+      - peanøtter
+      - bao_buns
+    prep_time: 60
