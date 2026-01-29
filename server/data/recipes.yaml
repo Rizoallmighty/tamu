@@ -30,7 +30,7 @@ recipes:
       - gul_løk
       - stang_selleri
       - tomat_purre
-      - mozarella
+      - parmesan
       - kjøttdeig
       - pasta
     prep_time: 120
@@ -98,7 +98,7 @@ recipes:
     image: kylling_bao_buns.jpg
     cuisine: fusion
     url: https://www.altasiatisk.no/2020/06/hjemmelaget-bao-buns-med-soya-kylling/
-    ingredients: 
+    ingredients:
       - kylling
       - soya_saus
       - honning
@@ -109,3 +109,87 @@ recipes:
       - peanøtter
       - bao_buns
     prep_time: 60
+
+  - id: laks_med_poteter
+    name: Laks med poteter
+    image: laks_med_poteter.jpg
+    cuisine: norwegian
+    ingredients:
+      - agurk
+      - poteter
+      - sandefjords_smør
+      - melk
+      - laks
+    prep_time: 30
+
+  - id: pho_ga
+    name: Pho ga
+    image: pho_ga.jpg
+    cuisine: vietnamese
+    ingredients:
+      - gul_løk
+      - ingefær
+      - koriander
+      - vårløk
+      - lime
+      - kylling
+      - ris_nudler
+    prep_time: 120
+
+  - id: hamburger_med_pommes
+    name: Hamburger med pommes
+    image: hamburger_med_pommes.jpg
+    cuisine: american
+    ingredients:
+      - sopp
+      - gul_løk
+      - hamburgerbrød
+      - hamburger
+      - ost
+      - truffel_mayo
+      - pommes_frites
+    prep_time: 30
+
+  - id: finnbiff_gryte
+    name: Finnbiff gryte
+    image: finnbiff_gryte.jpg
+    cuisine: norwegian
+    ingredients:
+      - poteter
+      - sopp
+      - gul_løk
+      - reinsdyrskav
+      - smør
+      - fløte
+      - einebær
+      - kjøttbuljong
+    prep_time: 60
+
+  - id: wok_med_nudler_og_svinekjøtt
+    name: Wok med nudler og svinekjøtt
+    image: wok_med_nudler_og_svinekjøtt.jpg
+    cuisine: asian
+    ingredients:
+      - gulrot
+      - brokkoli
+      - hvitløk
+      - chili
+      - svinekjøtt
+      - nudler
+      - soya_saus
+    prep_time: 35
+
+  - id: pinsa_pizza
+    name: Pinsa pizza
+    image: pinsa_pizza
+    cuisine: italian
+    ingredients:
+      - sopp
+      - rød_løk
+      - mozarella
+      - revet_ost
+      - pinsa_bunn
+      - tomat_saus
+      - hvit_saus
+      - spekeskinke
+    prep-time: 30
