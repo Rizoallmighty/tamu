@@ -3,6 +3,7 @@
     <div class="heading">
       <h1>TAMU</h1>
       <BaseButton text="Plan Week" @click="goToPlanWeek" />
+      <BaseButton text="View Dishes" @click="goToDishes" />
     </div>
 
     <div class="logo-container">
@@ -20,6 +21,10 @@ const router = useRouter();
 
 function goToPlanWeek() {
   router.push("/plan-week");
+}
+
+function goToDishes() {
+  router.push("/dishes");
 }
 
 const recipes = ref<any[]>([]);

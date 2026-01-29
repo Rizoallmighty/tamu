@@ -11,6 +11,11 @@ const routes: RouteRecordRaw[] = [
     name: "PlanWeek",
     component: () => import("@/views/PlanWeek.vue"),
   },
+  {
+    path: "/dishes",
+    name: "Dishes",
+    component: () => import("@/views/Dishes.vue"),
+  },
 ];
 
 export default routes;
