@@ -2,8 +2,9 @@
   <div class="meal-planner">
     <div class="heading">
       <h1>TAMU</h1>
-      <button class="plan-btn" @click="goToPlanWeek">Plan week</button>
+      <BaseButton text="Plan Week" @click="goToPlanWeek" />
     </div>
+
     <div class="logo-container">
       <img src="../assets/tamu.png" alt="TAMU Logo" />
     </div>
@@ -13,6 +14,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import BaseButton from "../components/BaseButton.vue"; // adjust path if needed
 
 const router = useRouter();
 
@@ -47,44 +49,10 @@ function goToDish(recipe: any) {
     font-size: 2.5rem;
     font-weight: bold;
   }
-
-  .plan-btn {
-    padding: 0.6rem 1.5rem;
-    border-radius: 2rem; // pill shape
-    border: none;
-    background: linear-gradient(135deg, #6b6b6b, #ff0000); // nice gradient
-    color: #fff;
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    transition: all 0.3s ease;
-
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-      background: linear-gradient(
-        135deg,
-        #6b6b6b,
-        #ff0000
-      ); // subtle hover shift
-    }
-
-    &:active {
-      transform: translateY(0);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    }
-  }
 }
 
 .meal-planner {
   padding: 2rem;
-
-  h1 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 2rem;
-  }
 
   .recipe-grid {
     display: grid;
@@ -100,15 +68,17 @@ function goToDish(recipe: any) {
     }
   }
 }
+
 .logo-container {
   display: flex;
   justify-content: center;
   margin-bottom: 2rem;
 
   img {
-    width: 100%; // controls size
-    height: auto; // keep aspect ratio
+    width: 100%;
+    height: auto;
     object-fit: contain;
+    max-width: 300px;
   }
 }
 </style>

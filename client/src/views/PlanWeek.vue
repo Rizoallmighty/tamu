@@ -3,11 +3,13 @@
     <div class="heading">
       <h1>Weekly Plan</h1>
       <div class="buttons">
-        <button class="btn go-back" @click="goBack">Go Back</button>
-        <button class="btn plan" @click="planWeek">Plan week</button>
-        <button class="btn make-list" @click="makeShoppingList">
-          Make Shopping List
-        </button>
+        <BaseButton text="Go Back" @click="goBack" />
+        <BaseButton text="Plan Week" @click="planWeek" />
+        <BaseButton
+          :disabled="!plannedRecipes.length"
+          text="Make Shopping List"
+          @click="makeShoppingList"
+        />
       </div>
     </div>
 
@@ -31,6 +33,7 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import ShoppingList from "../components/ShoppingList.vue";
+import BaseButton from "../components/BaseButton.vue";
 
 const router = useRouter();
 
