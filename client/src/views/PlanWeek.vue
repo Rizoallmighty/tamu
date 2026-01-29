@@ -1,9 +1,20 @@
 <template>
   <div class="week-planner">
-    <h1>Weekly Plan</h1>
-    <button class="go-back btn" @click="goBack">Go Back</button>
-    <button class="plan btn" @click="planWeek">Plan week</button>
+    <div class="heading">
+      <h1>Weekly Plan</h1>
+      <div class="buttons">
+        <button class="btn go-back" @click="goBack">Go Back</button>
+        <button class="btn plan" @click="planWeek">Plan week</button>
+        <button class="btn make-list" @click="makeShoppingList">
+          Make Shopping List
+        </button>
+      </div>
+    </div>
 
+    <!-- Shopping list -->
+    <ShoppingList :ingredients="shoppingList" />
+
+    <!-- Grid of planned recipes -->
     <div class="week-grid" v-if="plannedRecipes.length">
       <div v-for="(r, i) in plannedRecipes" :key="r.id" class="day-wrapper">
         <p class="day">{{ days[i] }}</p>
@@ -19,11 +30,13 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import ShoppingList from "../components/ShoppingList.vue";
 
 const router = useRouter();
 
 const recipes = ref<any[]>([]);
 const plannedRecipes = ref<any[]>([]);
+const shoppingList = ref<string[]>([]);
 
 const days = [
   "Monday",
@@ -49,8 +62,24 @@ function planWeek() {
     alert("Not enough recipes to plan a week!");
     return;
   }
-
   plannedRecipes.value = shuffle(recipes.value).slice(0, 7);
+  shoppingList.value = []; // clear previous shopping list
+}
+
+function makeShoppingList() {
+  if (!plannedRecipes.value.length) {
+    alert("Please plan your week first!");
+    return;
+  }
+
+  const allIngredients: string[] = [];
+  plannedRecipes.value.forEach((recipe) => {
+    if (recipe.ingredients) allIngredients.push(...recipe.ingredients);
+  });
+
+  shoppingList.value = Array.from(new Set(allIngredients)).sort((a, b) =>
+    a.localeCompare(b),
+  );
 }
 
 function shuffle(arr: any[]) {
@@ -62,44 +91,51 @@ function shuffle(arr: any[]) {
 .week-planner {
   padding: 2rem;
 
-  h1 {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
+  .heading {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
 
-  .btn {
-    padding: 0.6rem 1.5rem;
-    border-radius: 2rem; // pill shape
-    border: none;
-    background: #6b6b6b;
-    color: #fff;
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    transition: all 0.3s ease;
-    margin-right: 1rem;
-
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-      background: linear-gradient(135deg, #6b6b6b, #ff0000);
+    h1 {
+      font-size: 2rem;
+      font-weight: bold;
     }
 
-    &:active {
-      transform: translateY(0);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    .buttons {
+      display: flex;
+      gap: 0.5rem;
+
+      .btn {
+        padding: 0.6rem 1.5rem;
+        border-radius: 2rem;
+        border: none;
+        background: #6b6b6b;
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        transition: all 0.2s ease;
+
+        &:hover {
+          background-color: #555;
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+      }
     }
   }
 
   .week-grid {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 0.8rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    justify-items: center;
 
     @media (max-width: 900px) {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
     }
 
     @media (max-width: 600px) {
@@ -112,6 +148,7 @@ function shuffle(arr: any[]) {
   }
 
   .day-card {
+    width: 150px;
     background-color: #fff;
     border-radius: 0.6rem;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
