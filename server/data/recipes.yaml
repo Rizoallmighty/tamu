@@ -193,3 +193,18 @@ recipes:
       - hvit saus
       - spekeskinke
     prep-time: 30
+
+  - id: grønnsakssuppe
+    name: Grønnsakssuppe
+    image: grønnsakssuppe.jpg
+    cuisine: norwegian
+    ingredients:
+      - gulrot
+      - poteter
+      - sellerirot
+      - kålrot
+      - purre
+      - gul løk
+      - grønnsaksbuljong
+      - pølse
+    prep_time: 40
