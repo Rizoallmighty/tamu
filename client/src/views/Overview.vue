@@ -1,7 +1,7 @@
 <template>
   <div class="meal-planner">
     <h1>TAMU</h1>
-
+    <button class="plan-btn" @click="goToPlanWeek">Plan week</button>
     <div class="recipe-grid">
       <div
         v-for="r in recipes"
@@ -21,6 +21,13 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+function goToPlanWeek() {
+  router.push("/plan-week");
+}
 
 const recipes = ref<any[]>([]);
 

@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import Overview from "./components/Overview.vue";
+import Overview from "./views/Overview.vue";
 </script>
 
 <style lang="scss">

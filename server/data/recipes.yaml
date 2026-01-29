@@ -181,7 +181,7 @@ recipes:
 
   - id: pinsa_pizza
     name: Pinsa pizza
-    image: pinsa_pizza
+    image: pinsa_pizza.jpg
     cuisine: italian
     ingredients:
       - sopp
