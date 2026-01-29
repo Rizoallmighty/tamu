@@ -1,6 +1,6 @@
 <template>
   <div class="meal-planner">
-    <h1>TAMU – Meal Planner</h1>
+    <h1>TAMU</h1>
 
     <div class="recipe-grid">
       <div
@@ -13,8 +13,6 @@
         <img :src="r.imageUrl" alt="" class="recipe-image" />
         <div class="recipe-info">
           <h2>{{ r.name }}</h2>
-          <p class="cuisine">Cuisine: {{ r.cuisine }}</p>
-          <p class="prep-time">Prep time: {{ r.prep_time }} min</p>
         </div>
       </div>
     </div>

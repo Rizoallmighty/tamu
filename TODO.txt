@@ -1,0 +1,6 @@
+Add:
+shopping list
+randomizer
+filter for weekday/weekend
+add filter in overview for cuisine, weekday/weekend
+add ingredient function for kiwi vs asiastore
