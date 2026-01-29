@@ -1,20 +1,11 @@
 <template>
   <div class="meal-planner">
-    <h1>TAMU</h1>
-    <button class="plan-btn" @click="goToPlanWeek">Plan week</button>
-    <div class="recipe-grid">
-      <div
-        v-for="r in recipes"
-        :key="r.id"
-        class="recipe-card"
-        :class="{ clickable: r.url }"
-        @click="goToDish(r)"
-      >
-        <img :src="r.imageUrl" alt="" class="recipe-image" />
-        <div class="recipe-info">
-          <h2>{{ r.name }}</h2>
-        </div>
-      </div>
+    <div class="heading">
+      <h1>TAMU</h1>
+      <button class="plan-btn" @click="goToPlanWeek">Plan week</button>
+    </div>
+    <div class="logo-container">
+      <img src="../assets/tamu.png" alt="TAMU Logo" />
     </div>
   </div>
 </template>
@@ -45,6 +36,47 @@ function goToDish(recipe: any) {
 </script>
 
 <style scoped lang="scss">
+.heading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+
+  .plan-btn {
+    padding: 0.6rem 1.5rem;
+    border-radius: 2rem; // pill shape
+    border: none;
+    background: linear-gradient(135deg, #6b6b6b, #ff0000); // nice gradient
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      background: linear-gradient(
+        135deg,
+        #6b6b6b,
+        #ff0000
+      ); // subtle hover shift
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
 .meal-planner {
   padding: 2rem;
 
@@ -67,44 +99,16 @@ function goToDish(recipe: any) {
       grid-template-columns: 1fr;
     }
   }
+}
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
 
-  .recipe-card {
-    background-color: #fff;
-    border-radius: 1rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: box-shadow 0.3s ease;
-
-    &:hover {
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    }
-
-    &.clickable {
-      cursor: pointer;
-    }
-
-    .recipe-image {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-    }
-
-    .recipe-info {
-      padding: 1rem;
-
-      h2 {
-        font-size: 1.25rem;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-      }
-
-      .cuisine,
-      .prep-time {
-        font-size: 0.9rem;
-        color: #555;
-        margin-bottom: 0.25rem;
-      }
-    }
+  img {
+    width: 100%; // controls size
+    height: auto; // keep aspect ratio
+    object-fit: contain;
   }
 }
 </style>
