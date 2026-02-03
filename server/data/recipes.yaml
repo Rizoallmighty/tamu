@@ -81,9 +81,9 @@ recipes:
       - name: hvitløk
         quantity: 1
       - name: ost
-        quantity: 100g
+        quantity: 1
       - name: melk
-        quantity: 2dl
+        quantity: 0.5
       - name: toro lasagne kit
         quantity: 1
       - name: kjøttdeig
@@ -153,7 +153,7 @@ recipes:
         quantity: 6
       - name: sandefjordssmør
       - name: melk
-        quantity: 2dl
+        quantity: 0.5
       - name: laks
     prep_time: 30
 
