@@ -4,10 +4,13 @@ recipes:
     image: nakkis_med_ris.jpg
     cuisine: vietnamese
     ingredients:
-      - tomat
-      - gul løk
-      - ris
-      - nakkekotelett
+      - name: tomat
+        quantity: 2
+      - name: gul løk
+        quantity: 1
+      - name: ris
+      - name: nakkekotelett
+        quantity: 4
     prep_time: 30
 
   - id: canh_chua
@@ -15,10 +18,12 @@ recipes:
     image: canh_chua.jpg
     cuisine: vietnamese
     ingredients:
-      - tomat
-      - gul løk
-      - ris
-      - kyllingvinger
+      - name: tomat
+        quantity: 2
+      - name: gul løk
+        quantity: 1
+      - name: ris
+      - name: kyllingvinger
     prep_time: 60
 
   - id: pasta_bolognese
@@ -26,13 +31,17 @@ recipes:
     image: pasta_bolognese.jpg
     cuisine: italian
     ingredients:
-      - gulrot
-      - gul løk
-      - stang selleri
-      - tomat purre
-      - parmesan
-      - kjøttdeig
-      - pasta
+      - name: gulrot
+        quantity: 1
+      - name: gul løk
+        quantity: 2
+      - name: stang selleri
+        quantity: 1
+      - name: tomat purre
+        quantity: 1
+      - name: parmesan
+      - name: kjøttdeig
+      - name: pasta
     prep_time: 120
 
   - id: taco
@@ -40,17 +49,26 @@ recipes:
     image: taco.jpg
     cuisine: mexican
     ingredients:
-      - agurk
-      - rød løk
-      - avokado
-      - lime
-      - chili
-      - tomat
-      - kjøttdeig
-      - taco krydder
-      - rømme
-      - tortilla chips
-      - tortilla lefser
+      - name: agurk
+        quantity: 1
+      - name: rød løk
+        quantity: 1
+      - name: avokado
+        quantity: 2
+      - name: lime
+        quantity: 1
+      - name: chili
+        quantity: 1
+      - name: tomat
+        quantity: 2
+      - name: kjøttdeig
+      - name: taco krydder
+      - name: rømme
+        quantity: 1
+      - name: tortilla chips
+        quantity: 1
+      - name: tortilla lefser
+        quantity: 1
     prep_time: 40
 
   - id: lasagne
@@ -58,12 +76,17 @@ recipes:
     image: lasagne.jpg
     cuisine: italian
     ingredients:
-      - gul løk
-      - hvitløk
-      - ost
-      - melk
-      - toro lasagne kit
-      - kjøttdeig
+      - name: gul løk
+        quantity: 1
+      - name: hvitløk
+        quantity: 1
+      - name: ost
+        quantity: 1
+      - name: melk
+        quantity: 0.5
+      - name: toro lasagne kit
+        quantity: 1
+      - name: kjøttdeig
     prep_time: 90
 
   - id: canh_bau
@@ -71,10 +94,13 @@ recipes:
     image: canh_bau.jpg
     cuisine: vietnamese
     ingredients:
-      - squash
-      - gul løk
-      - nakkekotelett
-      - ris
+      - name: squash
+        quantity: 1
+      - name: gul løk
+        quantity: 1
+      - name: nakkekotelett
+        quantity: 4
+      - name: ris
     prep_time: 50
 
   - id: sommerruller_med_laks
@@ -82,44 +108,53 @@ recipes:
     image: sommerruller_med_laks.jpg
     cuisine: vietnamese
     ingredients:
-      - agurk
-      - salat
-      - chili
-      - sitron
-      - rød løk
-      - lime
-      - laks
-      - ris nudler
-      - ris papir
+      - name: agurk
+        quantity: 1
+      - name: salat
+        quantity: 1
+      - name: chili
+        quantity: 1
+      - name: sitron
+        quantity: 1
+      - name: rød løk
+        quantity: 1
+      - name: lime
+        quantity: 1
+      - name: laks
+      - name: ris nudler
+      - name: ris papir
     prep_time: 30 min
 
-  - id: kylling_bao_buns
-    name: Spicy kylling bao buns
-    image: kylling_bao_buns.jpg
-    cuisine: fusion
-    url: https://www.altasiatisk.no/2020/06/hjemmelaget-bao-buns-med-soya-kylling/
-    ingredients:
-      - kylling
-      - soyasaus
-      - honning
-      - østerssaus
-      - stjerneanis
-      - chili
-      - koriander
-      - peanøtter
-      - bao_buns
-    prep_time: 60
+  # - id: kylling_bao_buns
+  #   name: Spicy kylling bao buns
+  #   image: kylling_bao_buns.jpg
+  #   cuisine: fusion
+  #   url: https://www.altasiatisk.no/2020/06/hjemmelaget-bao-buns-med-soya-kylling/
+  #   ingredients:
+  #     - kylling
+  #     - soyasaus
+  #     - honning
+  #     - østerssaus
+  #     - stjerneanis
+  #     - chili
+  #     - koriander
+  #     - peanøtter
+  #     - bao_buns
+  #   prep_time: 60
 
   - id: laks_med_poteter
     name: Laks med poteter
     image: laks_med_poteter.jpg
     cuisine: norwegian
     ingredients:
-      - agurk
-      - poteter
-      - sandefjordssmør
-      - melk
-      - laks
+      - name: agurk
+        quantity: 1
+      - name: poteter
+        quantity: 6
+      - name: sandefjordssmør
+      - name: melk
+        quantity: 0.5
+      - name: laks
     prep_time: 30
 
   - id: pho_ga
@@ -127,13 +162,14 @@ recipes:
     image: pho_ga.jpg
     cuisine: vietnamese
     ingredients:
-      - gul løk
-      - ingefær
-      - koriander
-      - vårløk
-      - lime
-      - kylling
-      - ris nudler
+      - name: gul løk
+        quantity: 1
+      - name: ingefær
+        quantity: 1
+      - name: lime
+        quantity: 1
+      - name: kylling
+      - name: ris nudler
     prep_time: 120
 
   - id: hamburger_med_pommes
@@ -141,13 +177,18 @@ recipes:
     image: hamburger_med_pommes.jpg
     cuisine: american
     ingredients:
-      - sopp
-      - gul løk
-      - hamburgerbrød
-      - hamburger
-      - ost
-      - truffel mayo
-      - pommes frites
+      - name: sopp
+        quantity: 1
+      - name: gul løk
+        quantity: 1
+      - name: hamburgerbrød
+        quantity: 1
+      - name: hamburger
+        quantity: 2
+      - name: ost
+        quantity: 1
+      - name: truffel mayo
+      - name: pommes frites
     prep_time: 30
 
   - id: finnbiff_gryte
@@ -155,14 +196,21 @@ recipes:
     image: finnbiff_gryte.jpg
     cuisine: norwegian
     ingredients:
-      - poteter
-      - sopp
-      - gul løk
-      - reinsdyrskav
-      - smør
-      - fløte
-      - einebær
-      - kjøttbuljong
+      - name: poteter
+        quantity: 6
+      - name: sopp
+        quantity: 1
+      - name: gul løk
+        quantity: 1
+      - name: reinsdyrskav
+        quantity: 1
+      - name: smør
+        quantity: 1
+      - name: fløte
+        quantity: 1
+      - name: einebær
+        quantity: 1
+      - name: kjøttbuljong
     prep_time: 60
 
   - id: wok_med_nudler_og_svinekjøtt
@@ -170,13 +218,19 @@ recipes:
     image: wok_med_nudler_og_svinekjøtt.jpg
     cuisine: asian
     ingredients:
-      - gulrot
-      - brokkoli
-      - hvitløk
-      - chili
-      - svinekjøtt
-      - nudler
-      - soyasaus
+      - name: gulrot
+        quantity: 1
+      - name: brokkoli
+        quantity: 1
+      - name: hvitløk
+        quantity: 1
+      - name: chili
+        quantity: 1
+      - name: svinekjøtt
+        quantity: 1
+      - name: nudler
+        quantity: 1
+      - name: soyasaus
     prep_time: 35
 
   - id: pinsa_pizza
@@ -184,27 +238,39 @@ recipes:
     image: pinsa_pizza.jpg
     cuisine: italian
     ingredients:
-      - sopp
-      - rød løk
-      - mozarella
-      - revet ost
-      - pinsa bunn
-      - tomat saus
-      - hvit saus
-      - spekeskinke
-    prep-time: 30
+      - name: sopp
+        quantity: 1
+      - name: rød løk
+        quantity: 1
+      - name: mozarella
+        quantity: 1
+      - name: revet ost
+        quantity: 1
+      - name: pinsa bunn
+        quantity: 1
+      - name: tomat saus
+        quantity: 1
+      - name: hvit saus
+      - name: spekeskinke
+    prep_time: 30
 
   - id: grønnsakssuppe
     name: Grønnsakssuppe
     image: grønnsakssuppe.jpg
     cuisine: norwegian
     ingredients:
-      - gulrot
-      - poteter
-      - sellerirot
-      - kålrot
-      - purre
-      - gul løk
-      - grønnsaksbuljong
-      - pølse
+      - name: gulrot
+        quantity: 1
+      - name: poteter
+        quantity: 4
+      - name: sellerirot
+        quantity: 1
+      - name: kålrot
+        quantity: 1
+      - name: purre
+        quantity: 1
+      - name: gul løk
+        quantity: 1
+      - name: grønnsaksbuljong
+      - name: pølse
     prep_time: 40

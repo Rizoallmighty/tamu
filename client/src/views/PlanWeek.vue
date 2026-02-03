@@ -14,7 +14,7 @@
     </div>
 
     <!-- Shopping list -->
-    <ShoppingList :ingredients="shoppingList" />
+    <ShoppingList :ingredients="shoppingListComputed" />
 
     <!-- Grid of planned recipes -->
     <div class="week-grid" v-if="plannedRecipes.length">
@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import ShoppingList from "../components/ShoppingList.vue";
 import BaseButton from "../components/BaseButton.vue";
@@ -39,7 +39,15 @@ const router = useRouter();
 
 const recipes = ref<any[]>([]);
 const plannedRecipes = ref<any[]>([]);
-const shoppingList = ref<string[]>([]);
+
+// ✅ FIXED TYPE — allows null, matches your shoppingList generation
+interface Ingredient {
+  name: string;
+  quantity: number | null;
+}
+
+const shoppingList = ref<Ingredient[]>([]);
+const shoppingListComputed = computed(() => shoppingList.value);
 
 const days = [
   "Monday",
@@ -53,7 +61,15 @@ const days = [
 
 onMounted(async () => {
   const res = await fetch("/api/recipes");
-  recipes.value = await res.json();
+  const data = await res.json();
+
+  // Normalize ingredients: strings → { name, quantity: null }
+  recipes.value = data.map((recipe: any) => ({
+    ...recipe,
+    ingredients: recipe.ingredients.map((ing: any) =>
+      typeof ing === "string" ? { name: ing, quantity: null } : ing,
+    ),
+  }));
 });
 
 function goBack() {
@@ -70,19 +86,40 @@ function planWeek() {
 }
 
 function makeShoppingList() {
+  console.log("Clicked Make Shopping List");
+  console.log("Planned recipes:", plannedRecipes.value);
+
   if (!plannedRecipes.value.length) {
     alert("Please plan your week first!");
     return;
   }
 
-  const allIngredients: string[] = [];
+  const ingredientMap = new Map<string, number | null>();
+
   plannedRecipes.value.forEach((recipe) => {
-    if (recipe.ingredients) allIngredients.push(...recipe.ingredients);
+    console.log("Recipe ingredients:", recipe.ingredients);
+    recipe.ingredients?.forEach((ing: any) => {
+      const name = ing.name;
+      const qty = ing.quantity ?? null;
+
+      if (!ingredientMap.has(name)) {
+        ingredientMap.set(name, qty);
+      } else {
+        const existing = ingredientMap.get(name);
+        if (existing !== null && qty !== null) {
+          ingredientMap.set(name, existing + qty);
+        } else {
+          ingredientMap.set(name, null);
+        }
+      }
+    });
   });
 
-  shoppingList.value = Array.from(new Set(allIngredients)).sort((a, b) =>
-    a.localeCompare(b),
-  );
+  shoppingList.value = Array.from(ingredientMap.entries())
+    .map(([name, quantity]) => ({ name, quantity }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  console.log("Shopping list:", shoppingList.value);
 }
 
 function shuffle(arr: any[]) {
