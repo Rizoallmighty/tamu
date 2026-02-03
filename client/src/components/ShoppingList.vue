@@ -3,15 +3,20 @@
     <h2>Shopping List</h2>
     <ul>
       <li v-for="(ingredient, i) in props.ingredients" :key="i">
-        {{ ingredient }}
+        {{ ingredient.name }} {{ ingredient.quantity }}
       </li>
     </ul>
   </div>
 </template>
 
 <script setup lang="ts">
+interface Ingredient {
+  name: string;
+  quantity: number | null;
+}
+
 interface ShoppingListProps {
-  ingredients: string[];
+  ingredients: Ingredient[];
 }
 
 const props = defineProps<ShoppingListProps>();
