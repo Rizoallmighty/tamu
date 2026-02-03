@@ -1,6 +1,5 @@
 Add:
+Shoppinglist: Sort by category eg: veggies, meat, dairy 
 filter for weekday/weekend
-amount of ingredients
 Some meals span multiple days
 add ingredient function for kiwi vs asiastore
-for shopping: Mobile checklist for use when shopping so u can check of items bought
