@@ -1,5 +1,5 @@
 Add:
-Shoppinglist: Sort by category eg: veggies, meat, dairy 
-filter for weekday/weekend
-Some meals span multiple days
 add ingredient function for kiwi vs asiastore
+Deploy to the web
+Add storage db eg firebase
+Enhance design and file structure
