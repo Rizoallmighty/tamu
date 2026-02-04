@@ -1,4 +1,5 @@
 Add:
+Make it so dishes spanning multiple days dont update the ingredient count
 add ingredient function for kiwi vs asiastore
 Deploy to the web
 Add storage db eg firebase
