@@ -4,6 +4,7 @@ recipes:
     image: nakkis_med_ris.jpg
     cuisine: vietnamese
     dayType: weekday
+    duration: 1
     ingredients:
       - name: tomat
         quantity: 2
@@ -19,6 +20,7 @@ recipes:
     image: canh_chua.jpg
     cuisine: vietnamese
     dayType: weekday
+    duration: 2
     ingredients:
       - name: tomat
         quantity: 2
@@ -33,6 +35,7 @@ recipes:
     image: pasta_bolognese.jpg
     cuisine: italian
     dayType: weekday
+    duration: 2
     ingredients:
       - name: gulrot
         quantity: 1
@@ -52,6 +55,7 @@ recipes:
     image: taco.jpg
     cuisine: mexican
     dayType: weekend
+    duration: 1
     ingredients:
       - name: agurk
         quantity: 1
@@ -80,6 +84,7 @@ recipes:
     image: lasagne.jpg
     cuisine: italian
     dayType: weekday
+    duration: 2
     ingredients:
       - name: gul løk
         quantity: 1
@@ -99,6 +104,7 @@ recipes:
     image: canh_bau.jpg
     cuisine: vietnamese
     dayType: weekday
+    duration: 2
     ingredients:
       - name: squash
         quantity: 1
@@ -114,6 +120,7 @@ recipes:
     image: sommerruller_med_laks.jpg
     cuisine: vietnamese
     dayType: weekday
+    duration: 1
     ingredients:
       - name: agurk
         quantity: 1
@@ -154,6 +161,7 @@ recipes:
     image: laks_med_poteter.jpg
     cuisine: norwegian
     dayType: weekday
+    duration: 1
     ingredients:
       - name: agurk
         quantity: 1
@@ -170,6 +178,7 @@ recipes:
     image: pho_ga.jpg
     cuisine: vietnamese
     dayType: weekday
+    duration: 1
     ingredients:
       - name: gul løk
         quantity: 1
@@ -186,6 +195,7 @@ recipes:
     image: hamburger_med_pommes.jpg
     cuisine: american
     dayType: weekend
+    duration: 1
     ingredients:
       - name: sopp
         quantity: 1
@@ -206,6 +216,7 @@ recipes:
     image: finnbiff_gryte.jpg
     cuisine: norwegian
     dayType: weekday
+    duration: 1
     ingredients:
       - name: poteter
         quantity: 6
@@ -229,6 +240,7 @@ recipes:
     image: wok_med_nudler_og_svinekjøtt.jpg
     cuisine: asian
     dayType: weekday
+    duration: 1
     ingredients:
       - name: gulrot
         quantity: 1
@@ -250,6 +262,7 @@ recipes:
     image: pinsa_pizza.jpg
     cuisine: italian
     dayType: weekend
+    duration: 1
     ingredients:
       - name: sopp
         quantity: 1
@@ -272,6 +285,7 @@ recipes:
     image: grønnsakssuppe.jpg
     cuisine: norwegian
     dayType: weekday
+    duration: 2
     ingredients:
       - name: gulrot
         quantity: 1

@@ -18,7 +18,11 @@
 
     <!-- Grid of planned recipes -->
     <div class="week-grid" v-if="plannedRecipes.length">
-      <div v-for="(r, i) in plannedRecipes" :key="r.id" class="day-wrapper">
+      <div
+        v-for="(r, i) in plannedRecipes"
+        :key="r._instanceId"
+        class="day-wrapper"
+      >
         <p class="day">{{ days[i] }}</p>
         <div class="day-card">
           <img :src="`/images/${r.image}`" alt="" class="recipe-image" />
@@ -45,7 +49,9 @@ interface Recipe {
   name: string;
   image: string;
   ingredients: Ingredient[];
-  dayType?: "weekday" | "weekend"; // NEW
+  dayType?: "weekday" | "weekend";
+  duration?: number; // multi-day recipe
+  _instanceId?: string; // unique per day
 }
 
 const router = useRouter();
@@ -71,7 +77,7 @@ const days = [
 const ingredientCategories = ref<Record<string, string>>({});
 
 onMounted(async () => {
-  // fetch recipes from your express backend
+  // fetch recipes from your Express backend
   const res = await fetch("http://localhost:3000/api/recipes");
   const data = await res.json();
   recipes.value = data.map((r: any) => ({
@@ -83,7 +89,7 @@ onMounted(async () => {
     ),
   }));
 
-  // fetch ingredient categories JSON from backend
+  // fetch ingredient categories from backend
   const catRes = await fetch("http://localhost:3000/api/ingredientCategories");
   ingredientCategories.value = await catRes.json();
 });
@@ -98,35 +104,61 @@ function planWeek() {
     return;
   }
 
-  // Split recipes by dayType
-  const weekdayRecipes = recipes.value.filter((r) => r.dayType !== "weekend");
-  const weekendRecipes = recipes.value.filter((r) => r.dayType !== "weekday");
-
-  const plan: Recipe[] = [];
-
-  // Plan weekdays: Monday–Thursday (4 days)
-  for (let i = 0; i < 4; i++) {
-    if (weekdayRecipes.length === 0) break;
-    const idx = Math.floor(Math.random() * weekdayRecipes.length);
-    plan.push(weekdayRecipes.splice(idx, 1)[0]);
-  }
-
-  // Plan weekend: Friday–Sunday (3 days)
-  for (let i = 0; i < 3; i++) {
-    if (weekendRecipes.length === 0) break;
-    const idx = Math.floor(Math.random() * weekendRecipes.length);
-    plan.push(weekendRecipes.splice(idx, 1)[0]);
-  }
-
-  plannedRecipes.value = plan;
-
-  // Reset shopping list
+  // Clear previous plan & shopping list
+  plannedRecipes.value = [];
   shoppingList.value = {
     "frukt&grønt": [],
     protein: [],
     melk: [],
     tørrvare: [],
   };
+
+  const weekdayRecipes = recipes.value.filter((r) => r.dayType !== "weekend");
+  const weekendRecipes = recipes.value.filter((r) => r.dayType !== "weekday");
+
+  const plan: Recipe[] = [];
+  let dayIndex = 0;
+
+  while (dayIndex < 7) {
+    const isWeekend = dayIndex >= 4; // Friday–Sunday
+    const remainingDays = 7 - dayIndex;
+
+    const pool = isWeekend ? weekendRecipes : weekdayRecipes;
+
+    // Filter recipes that fit entirely in the segment
+    const candidates = pool.filter((r) => {
+      const duration = r.duration || 1;
+      if (duration > remainingDays) return false;
+      if (!isWeekend) return dayIndex + duration - 1 < 4; // weekday cannot spill into weekend
+      return dayIndex + duration - 1 <= 6; // weekend must fit in Fri–Sun
+    });
+
+    if (!candidates.length) {
+      dayIndex++;
+      continue;
+    }
+
+    const idx = Math.floor(Math.random() * candidates.length);
+    const recipe = candidates[idx];
+    const duration = recipe.duration || 1;
+
+    // Fill the plan for the recipe duration
+    for (let d = 0; d < duration; d++) {
+      plan[dayIndex] = { ...recipe, _instanceId: `${recipe.id}_${dayIndex}` };
+      dayIndex++;
+    }
+
+    // Remove used recipe from pool to avoid repetition
+    if (recipe.dayType === "weekday") {
+      const i = weekdayRecipes.indexOf(recipe);
+      if (i >= 0) weekdayRecipes.splice(i, 1);
+    } else if (recipe.dayType === "weekend") {
+      const i = weekendRecipes.indexOf(recipe);
+      if (i >= 0) weekendRecipes.splice(i, 1);
+    }
+  }
+
+  plannedRecipes.value = plan;
 }
 
 function makeShoppingList() {
@@ -155,14 +187,10 @@ function makeShoppingList() {
     shoppingList.value[category].push({ name, quantity: qty });
   });
 
-  // sort each category alphabetically
+  // Sort each category alphabetically
   Object.keys(shoppingList.value).forEach((cat) => {
     shoppingList.value[cat].sort((a, b) => a.name.localeCompare(b.name));
   });
-}
-
-function shuffle(arr: any[]) {
-  return [...arr].sort(() => Math.random() - 0.5);
 }
 </script>
 
