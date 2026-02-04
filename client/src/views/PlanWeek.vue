@@ -45,6 +45,7 @@ interface Recipe {
   name: string;
   image: string;
   ingredients: Ingredient[];
+  dayType?: "weekday" | "weekend"; // NEW
 }
 
 const router = useRouter();
@@ -96,8 +97,30 @@ function planWeek() {
     alert("Not enough recipes to plan a week!");
     return;
   }
-  plannedRecipes.value = shuffle(recipes.value).slice(0, 7);
-  // reset shopping list
+
+  // Split recipes by dayType
+  const weekdayRecipes = recipes.value.filter((r) => r.dayType !== "weekend");
+  const weekendRecipes = recipes.value.filter((r) => r.dayType !== "weekday");
+
+  const plan: Recipe[] = [];
+
+  // Plan weekdays: Monday–Thursday (4 days)
+  for (let i = 0; i < 4; i++) {
+    if (weekdayRecipes.length === 0) break;
+    const idx = Math.floor(Math.random() * weekdayRecipes.length);
+    plan.push(weekdayRecipes.splice(idx, 1)[0]);
+  }
+
+  // Plan weekend: Friday–Sunday (3 days)
+  for (let i = 0; i < 3; i++) {
+    if (weekendRecipes.length === 0) break;
+    const idx = Math.floor(Math.random() * weekendRecipes.length);
+    plan.push(weekendRecipes.splice(idx, 1)[0]);
+  }
+
+  plannedRecipes.value = plan;
+
+  // Reset shopping list
   shoppingList.value = {
     "frukt&grønt": [],
     protein: [],
