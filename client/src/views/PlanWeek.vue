@@ -14,7 +14,7 @@
     </div>
 
     <!-- Shopping list -->
-    <ShoppingList :ingredients="shoppingListComputed" />
+    <ShoppingList :ingredients="shoppingList" />
 
     <!-- Grid of planned recipes -->
     <div class="week-grid" v-if="plannedRecipes.length">
@@ -30,24 +30,32 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import ShoppingList from "../components/ShoppingList.vue";
 import BaseButton from "../components/BaseButton.vue";
 
-const router = useRouter();
-
-const recipes = ref<any[]>([]);
-const plannedRecipes = ref<any[]>([]);
-
-// ✅ FIXED TYPE — allows null, matches your shoppingList generation
 interface Ingredient {
   name: string;
-  quantity: number | null;
+  quantity: number;
 }
 
-const shoppingList = ref<Ingredient[]>([]);
-const shoppingListComputed = computed(() => shoppingList.value);
+interface Recipe {
+  id: string;
+  name: string;
+  image: string;
+  ingredients: Ingredient[];
+}
+
+const router = useRouter();
+const recipes = ref<Recipe[]>([]);
+const plannedRecipes = ref<Recipe[]>([]);
+const shoppingList = ref<Record<string, Ingredient[]>>({
+  "frukt&grønt": [],
+  protein: [],
+  melk: [],
+  tørrvare: [],
+});
 
 const days = [
   "Monday",
@@ -59,17 +67,24 @@ const days = [
   "Sunday",
 ];
 
-onMounted(async () => {
-  const res = await fetch("/api/recipes");
-  const data = await res.json();
+const ingredientCategories = ref<Record<string, string>>({});
 
-  // Normalize ingredients: strings → { name, quantity: null }
-  recipes.value = data.map((recipe: any) => ({
-    ...recipe,
-    ingredients: recipe.ingredients.map((ing: any) =>
-      typeof ing === "string" ? { name: ing, quantity: null } : ing,
+onMounted(async () => {
+  // fetch recipes from your express backend
+  const res = await fetch("http://localhost:3000/api/recipes");
+  const data = await res.json();
+  recipes.value = data.map((r: any) => ({
+    ...r,
+    ingredients: r.ingredients.map((i: any) =>
+      typeof i === "string"
+        ? { name: i, quantity: 1 }
+        : { name: i.name, quantity: i.quantity ?? 1 },
     ),
   }));
+
+  // fetch ingredient categories JSON from backend
+  const catRes = await fetch("http://localhost:3000/api/ingredientCategories");
+  ingredientCategories.value = await catRes.json();
 });
 
 function goBack() {
@@ -82,44 +97,45 @@ function planWeek() {
     return;
   }
   plannedRecipes.value = shuffle(recipes.value).slice(0, 7);
-  shoppingList.value = []; // clear previous shopping list
+  // reset shopping list
+  shoppingList.value = {
+    "frukt&grønt": [],
+    protein: [],
+    melk: [],
+    tørrvare: [],
+  };
 }
 
 function makeShoppingList() {
-  console.log("Clicked Make Shopping List");
-  console.log("Planned recipes:", plannedRecipes.value);
-
-  if (!plannedRecipes.value.length) {
-    alert("Please plan your week first!");
+  if (
+    !plannedRecipes.value.length ||
+    !Object.keys(ingredientCategories.value).length
+  )
     return;
-  }
 
-  const ingredientMap = new Map<string, number | null>();
-
+  const totals = new Map<string, number>();
   plannedRecipes.value.forEach((recipe) => {
-    console.log("Recipe ingredients:", recipe.ingredients);
-    recipe.ingredients?.forEach((ing: any) => {
-      const name = ing.name;
-      const qty = ing.quantity ?? null;
-
-      if (!ingredientMap.has(name)) {
-        ingredientMap.set(name, qty);
-      } else {
-        const existing = ingredientMap.get(name);
-        if (existing !== null && qty !== null) {
-          ingredientMap.set(name, existing + qty);
-        } else {
-          ingredientMap.set(name, null);
-        }
-      }
+    recipe.ingredients.forEach((ing) => {
+      totals.set(ing.name, (totals.get(ing.name) || 0) + ing.quantity);
     });
   });
 
-  shoppingList.value = Array.from(ingredientMap.entries())
-    .map(([name, quantity]) => ({ name, quantity }))
-    .sort((a, b) => a.name.localeCompare(b.name));
+  shoppingList.value = {
+    "frukt&grønt": [],
+    protein: [],
+    melk: [],
+    tørrvare: [],
+  };
 
-  console.log("Shopping list:", shoppingList.value);
+  totals.forEach((qty, name) => {
+    const category = ingredientCategories.value[name] || "tørrvare";
+    shoppingList.value[category].push({ name, quantity: qty });
+  });
+
+  // sort each category alphabetically
+  Object.keys(shoppingList.value).forEach((cat) => {
+    shoppingList.value[cat].sort((a, b) => a.name.localeCompare(b.name));
+  });
 }
 
 function shuffle(arr: any[]) {
@@ -136,51 +152,12 @@ function shuffle(arr: any[]) {
     align-items: center;
     gap: 1rem;
     margin-bottom: 1.5rem;
-
-    h1 {
-      font-size: 2rem;
-      font-weight: bold;
-    }
-
-    .buttons {
-      display: flex;
-      gap: 0.5rem;
-
-      .btn {
-        padding: 0.6rem 1.5rem;
-        border-radius: 2rem;
-        border: none;
-        background: #6b6b6b;
-        color: #fff;
-        font-weight: 600;
-        cursor: pointer;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-        transition: all 0.2s ease;
-
-        &:hover {
-          background-color: #555;
-        }
-
-        &:active {
-          transform: translateY(0);
-        }
-      }
-    }
   }
 
   .week-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
-    justify-items: center;
-
-    @media (max-width: 900px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @media (max-width: 600px) {
-      grid-template-columns: 1fr;
-    }
   }
 
   .day-wrapper {
@@ -196,15 +173,10 @@ function shuffle(arr: any[]) {
     text-align: center;
     transition: box-shadow 0.3s;
 
-    &:hover {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
     .day {
       font-weight: 600;
       margin-bottom: 0.3rem;
       font-size: 0.9rem;
-      color: #333;
     }
 
     .recipe-image {
@@ -218,7 +190,6 @@ function shuffle(arr: any[]) {
     .recipe-name {
       font-size: 0.85rem;
       font-weight: 500;
-      color: #555;
     }
   }
 }
